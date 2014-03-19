@@ -1,0 +1,11 @@
+<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper', array('router' => $this->_router))->show(); ?>
+
+<h1><?php echo $this->out($this->title); ?></h1>
+
+<p>
+    <?php echo $this->out($this->op1); ?> -
+    <?php echo $this->out($this->op2); ?> =
+    <strong>
+        <?php echo $this->out($this->result); ?>
+    </strong>
+</p>
