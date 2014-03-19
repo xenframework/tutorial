@@ -93,7 +93,7 @@ return array(
         'action'            => 'list',
         'allow'             => array('user', 'admin'),
     ),
-    '/login/' => array(
+    '/login.html' => array(
         'controller'        => 'login',
         'action'            => 'index',
         'allow'             => array('guest', 'user', 'admin'),

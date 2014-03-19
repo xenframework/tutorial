@@ -14,7 +14,7 @@
  * file that was distributed with this source code.
  */
 
-/*
+/**
  * All paths will be relative to project directory
  */
 chdir(dirname(__DIR__));

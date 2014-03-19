@@ -33,8 +33,9 @@ class Bootstrap extends BootstrapBase
      */
     protected function _initEnvironment()
     {
-        if ($this->_appEnv == Application::DEVELOPMENT || $this->_appEnv == Application::TEST) {
-
+        if ($this->_resources['AppEnv'] == Application::DEVELOPMENT ||
+            $this->_resources['AppEnv'] == Application::TEST
+        ) {
             error_reporting(E_ALL | E_STRICT);
             ini_set('display_errors', 'on');
 
