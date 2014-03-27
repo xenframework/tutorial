@@ -28,8 +28,8 @@ class CalculatorMenuHelper extends ViewHelper
             <ul class="list-inline">
                 <li><a href="' . $router->toUrl('calculator', 'add') . '">Add</a></li>
                 <li><a href="' . $router->toUrl('calculator', 'subtract') . '">Subtract</a></li>
-                <li><a href="' . $router->toUrl('calculator', 'multiply') . '">Multiply</a></li>
-                <li><a href="' . $router->toUrl('calculator', 'divide') . '">Divide</a></li>
+                <li><a href="#">Multiply</a></li>
+                <li><a href="#">Divide</a></li>
             </ul>
         ';
     }

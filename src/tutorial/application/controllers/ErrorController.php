@@ -17,6 +17,7 @@
 namespace controllers;
 
 use xen\mvc\ErrorControllerBase;
+use xen\mvc\view\Phtml;
 
 class ErrorController extends ErrorControllerBase
 {
@@ -32,6 +33,11 @@ class ErrorController extends ErrorControllerBase
 
     function exceptionHandlerAction()
     {
+        $layout = new Phtml('application/layouts/error/exception.phtml');
+        $this->setLayout($layout);
+
+        $layout->addPartial('content', $this->_view);
+
         $e = $this->getParam('e');
 
         $this->_layout->title           = 'Error - Exception Raised';
