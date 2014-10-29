@@ -1,0 +1,21 @@
+<h1>Subtract</h1>
+<div>
+    <?php echo $this->_viewHelperBroker->getHelper(
+        'FormHelper',
+        array('action'      => $this->_router->toUrl('com_xenframework_calculator_controllers_frontend_calculator_subtractDo'),
+              'id'          => 'fr1',
+              'method'      => 'post',
+              'buttonValue' => 'Subtract',
+              'controls'    => array(
+                  array(
+                      'field'   => 'op1',
+                      'type'    => 'number'
+                  ),
+                  array(
+                      'field'   => 'op2',
+                      'type'    => 'number'
+                  )
+              )
+
+        ))->show(); ?>
+</div>

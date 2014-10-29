@@ -1,0 +1,21 @@
+<h1><?php echo $this->title ?></h1>
+
+<div>
+    <?php echo $this->_viewHelperBroker->getHelper(
+        'FormHelper',
+        array('action'      => $this->_router->toUrl('com_xenframework_login_controllers_login_doLogin'),
+              'id'          => 'fr1',
+              'method'      => 'post',
+              'buttonValue' => 'login',
+              'controls'    => array(
+                  array(
+                      'field'   => 'email',
+                      'type'    => 'email',
+                  ),
+                  array(
+                      'field'   => 'password',
+                      'type'    => 'password',
+                  )
+              )
+        ))->show(); ?>
+</div>

@@ -1,0 +1,357 @@
+TODO refactor Router to be phpunit testable
+TODO Cookies
+TODO Pagination
+TODO think about events between packages
+---
+
+TODO Ajax example
+---
+
+TODO RESPONSE
+investigate
+
+Remove session and cookie. there are a lot of functions in php
+
+http://framework.zend.com/manual/2.0/en/modules/zend.http.response.html
+https://github.com/zendframework/zf2/blob/master/library/Zend/Http/Response.php
+
+http://symfony.com/doc/current/book/http_fundamentals.html
+https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpFoundation/Response.php
+
+http://api.cakephp.org/2.0/class-HttpResponse.html
+https://github.com/cakephp/cakephp/blob/master/lib/Cake/Network/CakeResponse.php
+
+---
+
+
+TODO CACHING
+http://www.jongales.com/blog/2009/02/18/simple-file-based-php-cache-class/
+http://www.catswhocode.com/blog/how-to-create-a-simple-and-efficient-php-cache
+http://stackoverflow.com/questions/14420176/automatically-create-cache-file-with-php
+http://www.snipe.net/2009/03/quick-and-dirty-php-caching/#disqus_thread
+http://blog.digitalstruct.com/2008/02/27/php-performance-series-caching-techniques/
+
+http://librosweb.es/tutorial/la-nueva-extension-opcache-de-php-55/
+https://rtcamp.com/tutorials/php/zend-opcache/
+remove apc
+
+Problem
+http://www.php.net/manual/en/function.spl-autoload.php#103548
+cache dependencies (PDO can not be serialized)
+http://stackoverflow.com/questions/10936636/php-pdo-cannot-serialize-or-unserialize-pdo-instances
+http://stackoverflow.com/questions/8700702/pdoexception-you-cannot-serialize-or-unserialize-pdo-instances
+
+cache phtml
+http://stackoverflow.com/questions/12999351/caching-strategies-in-mvc-framework
+---
+
+TODO PAGINATE
+---
+
+
+
+
+TODO DOCUMENTATION
+contextual help with \PDO p.e.
+this can be achieved with phpdoc (using types in: @return, @var, @param)
+phpdoc for every class
+
+Building a Docs Site with Jekyll + GitHub Pages
+***https://learn.andrewmunsell.com/learn/jekyll-by-example/tutorial?utm_source=blog&utm_medium=redirect&utm_campaign=Blog%20Redirect
+https://help.github.com/categories/20/articles
+http://in-the-attic.com/2013/01/04/building-a-blog-using-jekyll-bootstrap-and-github-pages-a-beginners-guide/
+http://jekyllbootstrap.com
+http://pygments.org
+http://yeswejekyll.com/
+http://nicolashery.com/fast-mobile-friendly-website-with-jekyll/
+---
+
+
+
+TODO COMMUNITY CONTRIBUTORS
+open the project to new contributors
+pull request
+http://www.doctrine-project.org/contribute.html
+---
+
+TODO UNIT TESTING
+phpunit
+http://www.baluart.net/articulo/introduccion-a-las-pruebas-unitarias-en-php-con-phpunit
+https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/
+http://phpunit.de/manual/3.8/en/index.html
+https://www.youtube.com/watch?v=Iq6wvboGU-A
+https://www.youtube.com/watch?v=4BXpi7056RM
+---
+
+TODO ORM Integration
+RedBeanPhp
+Easy to learn. Only for relational databases
+http://www.redbeanphp.com
+---
+
+
+
+=======
+modules
+=======
+
+with modules we have 2 options
+
+zf1 like:
+--------
+
+	- bootstrap is loaded in route when you know the module
+
+
+	each module is a separate application
+
+	we have to choose an application to run and then the normal route()
+		it can be done looking at url for module name
+		but if we have custom url's =>
+			we have to have a conf file where load first custom url's from every module
+
+	FrontController will works as it does now
+		so we need an intermediate step in application to select the module
+
+	Every module bootstrap will extends an application bootstrap were common resources to all modules will be loaded
+
+	index.php -> new app() ->
+					private $module; //new property in application
+
+					we now do the bootstrap require in Application constructor
+
+							_getModuleFromUrl($url)
+								$this->module =
+								return $url slice
+								this file can look for custom urls in that module
+						   ->
+
+						   	bootstrap()
+
+						   	in module bootstrap we create a resource with the module name
+
+    default module
+
+zf2 like:
+
+    modules are plug&play
+---
+
+
+
+http://www.mindmeister.com/es/education
+---
+
+event driven programming
+http://youtu.be/_UipYmC8foU
+http://youtu.be/4rRa-bB5kTA
+http://agafix.org/a-practical-guide-to-event-driven-programming-with-php/
+---
+
+xen\translate
+---
+
+Bootstrap
+
+We have implemented Bootsrap as a Service Locator which has all the dependencies that any object would require
+The 'problem' or not? is we have to pass the Service Locator across the Classes Tree to he leafs
+One solution is to use a DI Container Framework like Auryn or Pimple (from Symfony)
+TODO: Learn about Auryn works and try to implement it in xenFramework
+---
+
+
+---------------
+Design patterns
+---------------
+https://github.com/domnikl/DesignPatternsPHP
+http://www.michael-pratt.com/blog/13/Patrones-de-Diseno-Inyeccion-de-Dependencias/
+http://www.imaginanet.com/blog/inyeccion-de-dependencias.html
+[*]http://www.davegardner.me.uk/blog/2009/11/23/php-dependency-strategies-dependency-injection-and-service-locator/
+http://www.youtube.com/watch?v=DcNtg4_i-2w
+http://www.youtube.com/watch?v=IKD2-MAkXyQ&feature=share&list=PLM-218uGSX3DQ3KsB5NJnuOqPqc5CW2kW&index=2
+http://krasimirtsonev.com/blog/article/Dependency-Injection-in-PHP-example-how-to-DI-create-your-own-dependency-injection-container
+http://youtu.be/_LBwpUwDBis
+https://www.youtube.com/watch?v=Hm2fTv9wikI
+http://www.easylearntutorial.com/
+https://www.youtube.com/user/easylearntutorial/videos?view=1&flow=grid
+http://devzone.zend.com/1732/implementing-the-observer-pattern-with-splobserver-and-splsubject/
+
+-------
+symfony
+-------
+http://www.youtube.com/watch?v=fqXKZxo9Qb4
+
+-------
+zf2
+-------
+http://www.youtube.com/playlist?list=PLERcn8f9DIyjK61qQMEqnWo2FfPvt7XYA
+
+
+
+
+
+-----------
+Annotations
+-----------
+
+We do not create models in FrontController because models are out of reach. They are part of the application logic and
+we do not know nothing about it.
+---
+
+I think ini_set does not work if variables are already setted in php.ini
+---
+
+xenFramework made by programmers for programmers
+xenFramework is what it was expected for zf to be to a programmer
+easy to learn, easy to use, intuitive, fast, no magic methods, no globals, no singletons, ...
+NO MAGIC => everything is under your control, EXPLICIT
+
+i.e. you can render a view from any controller
+
+=========
+Design Patterns
+=========
+http://www.dofactory.com/Patterns/Patterns.aspx
+https://github.com/domnikl/DesignPatternsPHP
+http://www.maltblue.com/tutorial/zend-framework-2-event-manager-a-gentle-introduction
+
+Dependency Injection
+    http://www.davegardner.me.uk/blog/2009/11/23/php-dependency-strategies-dependency-injection-and-service-locator/
+    https://www.youtube.com/watch?v=egONoRg_Gjg&list=PLGJDCzBP5j3y3uxsElO_HYvPpkjnu-UNW
+IoC
+Service Locator
+Subject/Observer
+Factory
+
+
+http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
+
+======
+Events
+======
+https://github.com/prggmr/XPSPL/tree/master/XPSPL
+********
+in zf2: http://stackoverflow.com/questions/12726134/zend-framework-2-cannot-attach-to-dispatch-event
+in symfony: http://fabien.potencier.org/article/58/create-your-own-framework-on-top-of-the-symfony2-components-part-9
+http://blog.ircmaxell.com/2012/03/handling-plugins-in-php.html
+https://www.youtube.com/watch?v=_UipYmC8foU&feature=youtu.be
+http://youtu.be/4rRa-bB5kTA
+http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
+http://headers-already-sent.com/eventdispatcher/#.UtB4K3lXfeE
+********
+
+
+https://github.com/simme/EventDispatcher
+http://www.cainsvault.com/design-pattern-php-event-dispatcher/
+http://stackoverflow.com/questions/4471183/php-event-listener-best-practice-implementation
+
+=========
+ViewHelpers in zf2
+=========
+
+http://zf2dev.com/2013/03/19/how-to-write-custom-view-helper-in-zend-framework-2/
+
+====
+IoC in zf2
+====
+
+https://juriansluiman.nl/article/120/using-zend-framework-service-managers-in-your-application
+http://headers-already-sent.com/eventdispatcher/#.UtB4K3lXfeE
+
+
+Documentation
+http://xpspl.readthedocs.org/en/latest/
+----
+
+
+RegEx
+* http://es1.php.net/preg_match
+ * http://www.phpliveregex.com
+ * http://www.mclibre.org/consultar/php/lecciones/php_expresiones_regulares.html
+ * http://www.maestrosdelweb.com/editorial/curso-symfony2-definicion-de-rutas-con-comodines/
+ *
+ * http://lzone.de/PHP%20preg_match%20Examples
+ * http://stackoverflow.com/questions/19774787/php-preg-match-extract-args
+---
+
+github organization
+---
+
+github as contributor
+
+click fork button on original github project page
+clone your forked repository instead original
+push to it
+press Pull Requests button on your repository
+create it
+wait for original author to accept it
+http://stackoverflow.com/questions/17857283/permission-denied-error-on-github-push
+---
+
+apc and memcached
+http://www.gigoblog.com/2013/11/14/install-memcache-and-apc-on-mavericks-server-3-mac-os-x-10-9/
+http://devzone.zend.com/1812/using-apc-with-php/
+
+apc example (admin: http://apc.dev)
+
+class Person
+{
+    private $_name;
+
+    public function __construct($_name)
+    {
+        $this->_name = $_name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($_name)
+    {
+        $this->_name = $_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
+}
+
+//$p = new Person('ismael');
+//apc_store('p', $p);
+//$p2 is a copy of $p1, not a reference
+$p2 = apc_fetch('p');
+echo $p2->getName();
+---
+
+$msg = 'Msg: ' . $exception->getMessage() . '<br>';
+        $msg .= 'File: ' . $exception->getFile() . '<br>';
+        $msg .= 'Line: ' . $exception->getLine() . '<br>';
+        $msg .= 'Trace: ' . var_dump($exception->getTrace()) . '<br>';
+        $msg .= 'TraceString: ' . $exception->getTraceAsString();
+
+
+http://www.php.net/manual/en/function.set-error-handler.php
+
+Error handler
+(http://www.tutorialspoint.com/php/php_error_handling.htm)
+http://stackoverflow.com/questions/557052/exceptions-in-php-try-catch-or-set-exception-handler
+
+DONE REQUEST
+http://juandarodriguez.es/tutoriales/fundamentos-de-un-framework-web-camino-symfony2/
+
+http://docs.phalconphp.com/en/latest/api/Phalcon_Http_Request.html
+
+http://framework.zend.com/manual/1.12/en/zend.controller.request.html
+http://framework.zend.com/manual/2.2/en/modules/zend.http.request.html
+https://github.com/zendframework/zf2/blob/master/library/Zend/Http/Request.php
+
+http://symfony.com/doc/current/components/http_foundation/introduction.html
+https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpFoundation/Request.php
+
+MOVE REQUEST BEFORE BOOTSTRAP
+investigate
+---

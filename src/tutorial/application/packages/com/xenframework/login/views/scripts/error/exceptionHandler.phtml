@@ -1,0 +1,10 @@
+<h1><?php echo $this->out($this->title); ?></h1>
+
+<table>
+    <?php foreach($this->msgs as $key => $value): ?>
+    <tr>
+        <td><?php echo $key; ?></td>
+        <td><?php echo $value; ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>

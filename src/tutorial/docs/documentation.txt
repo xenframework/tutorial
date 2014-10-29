@@ -1,0 +1,402 @@
+News
+-------
+
+packages
+doctrine
+cache for roles
+redirectInSeconds
+
+
+
+
+Notes for documentation
+-----------------------
+
+0. config variables
+
+Important!
+    Package config values overrides application config values
+    Package Bootstrap values also overrides application Bootstrap values
+
+array(
+    'layoutPath'        => $value,
+    'errorLayoutPath'   => $value,
+)
+
+0. Controllers
+
+        - init(), indexAction() methods are not mandatory
+
+1. New Layout
+
+        - you have to set the router and the viewHelperBroker to it
+
+2. Default Layout Path (defaultLayoutPath) can be defined either:
+
+        Default layout path is 'application/layouts/default', if you want to use a different default layout path,
+
+        - application.ini
+
+            defaultLayoutPath   = 'application/layouts/yourFolder'
+
+        - Bootstrap
+
+            protected function _initDefaultLayoutPath()
+            {
+                return 'application/layouts/yourFolder';
+            }
+
+3. Partials
+
+        - They are Phtml objects and their files (.phtml) must be stored in application/views/partials
+        - Then you have to assign that partial to another one or to the layout (indeed is also a partial)
+
+                $partial = new Phtml('application/views/partials/example.phtml');
+                $this->_view->addPartial('example', $partial);
+
+        - Now in the parent view or layout:
+
+                $this->partial('example')->render();
+
+4. View
+
+        - All variables defined in a partial are propagated to its child
+        - Create the action view is:
+
+                - create a new partial
+
+                    $view = new Phtml($pathToThePhtmlFile);
+
+                - set it to the layout with the name 'content'
+
+                    $layout->addPartial('content', $view);
+
+        - View variables
+
+                - In the action
+
+                    $view->variableName = $value;
+
+                - In the view
+
+                    echo $this->variableName;
+
+5. Bootstrap
+
+        - Add new resource
+
+                protected function _initResourceName()
+                {
+                    return new ResourceName();
+                }
+
+6. Events
+
+7. Databases
+
+8. Dependencies
+
+9. Routes
+
+10. Models
+
+        - db property to see contextual help:
+
+                /**
+                 * @var Adapter
+                 */
+                private $_db;
+
+11. Exceptions
+
+        - 'xen\mvc\helpers\exception\HelperNotFoundException'
+        - 'xen\mvc\exception\ControllerParamNotFoundException'
+
+12. View Helpers
+
+        - implement protected _html() method
+        - Router available in $this->_router
+        - Params from view available in $this->_params
+
+13. Ajax response
+
+        //$this->render();
+        return $json;
+
+14. Use of ZendPdf in xenframework
+
+        http://stackoverflow.com/questions/14717024/where-to-get-and-how-to-use-zend-pdf-standalone
+
+        - copy to vendor:
+
+            - Zend\Memory
+            - ZendPdf
+
+        - In a controller:
+
+                use ZendPdf\PdfDocument;
+                use ZendPdf\Page;
+                use ZendPdf\Font;
+
+                $pdf = new PdfDocument();
+
+                        $pdf->pages[0] = new Page( Page::SIZE_A4 );
+                        $pdf->pages[0]->setFont( Font::fontWithName( Font::FONT_HELVETICA ), 24 );
+                        $pdf->pages[0]->drawText( 'Hello world!', 240, 400 );
+
+                        $pdf->save( $absolutePathTo . 'example.pdf' );
+
+        - Be sure www user has write permissions in that directory
+
+15. Partial Cache
+
+            public function indexAction()
+            {
+                $this->_layout->title           = 'xenFramework.com';
+                $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+
+                $partial = new Phtml('application/views/partials/example.phtml', 10);
+
+                if ($content = $this->_cache->get('application/views/partials/example.phtml', 10))
+                {
+                    $partial->setCachedContent($content);
+                }
+                else
+                {
+                    // ...
+                    // more complex code
+                    // ...
+
+                    $partial->complexQuery = 'complex1';
+
+                    // ...
+                    // more complex code
+                    // ...
+                }
+
+                $this->_view->addPartial('example', $partial);
+
+                $this->render();
+            }
+
+16. Controllers directory organization
+
+    You can put your controllers inside application/controllers directly or you can create new directories inside
+    application/controllers for a better organization like backend or frontend. You have to declare it in
+    config/routes.php setting the namespace key for a given route. Remember to create the same directories structure
+    inside of application/views/scripts. As always namespace must match with directory structure.
+
+    Example of route:
+
+    return array(
+        '/' => array(
+            'namespace'         => 'controllers\\frontend',
+            'controller'        => 'index',
+            'action'            => 'index',
+            'expires'           => 10,
+        ),
+    );
+
+17. Controller as a dependency
+
+    Bootstrap is not called at the start, if you need some bootstrap code in this case you have to put it in a event hander
+
+18. main package
+
+It should contain all the stuff that is specific to your project and that you don't think you're ever going to reuse anywhere.
+
+19. Doctrine
+    [
+        http://docs.doctrine-project.org/en/2.0.x/index.html
+        http://www.krueckeberg.org/notes/d2.html
+        http://parasitovirtual.wordpress.com/category/cursos-y-articulos/desarrollo-de-webs/php/doctrine/page/2/
+    ]
+
+    http://docs.doctrine-project.org/en/2.0.x/cookbook/integrating-with-codeigniter.html
+
+    http://wildlyinaccurate.com/integrating-doctrine-2-with-codeigniter-2/comment-page-2
+
+    https://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html
+    https://github.com/doctrine/doctrine2-orm-tutorial
+
+    1. Create composer.json
+            {
+                "require": {
+                    "doctrine/orm": "*"
+                }
+            }
+    2. move these files into vendor:
+            composer
+            doctrine
+            symfony
+            autoload.php
+    3. create bin directory and create these 2 symbolic links inside:
+            ln -s ../vendor/doctrine/orm/bin/doctrine doctrine
+            ln -s ../vendor/doctrine/orm/bin/doctrine.php doctrine.php
+    4. http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
+    5. http://christoph-burmeister.eu/?p=2268
+    6. trying console
+
+        php doctrine.php
+       You are missing a "cli-config.php" or "config/cli-config.php" file in your
+       project, which is required to get the Doctrine Console working. You can use the
+       following sample as a template:
+
+       <?php
+       use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
+       // replace with file to your own project bootstrap
+       require_once 'bootstrap.php';
+
+       // replace with mechanism to retrieve EntityManager in your app
+       $entityManager = GetEntityManager();
+
+       return ConsoleRunner::createHelperSet($entityManager);
+
+       cli-config created in bin:
+
+       ---------------------------------------------------------
+       <?php
+       require __DIR__ . '/../vendor/xenframework/xen/src/xen/db/doctrine/DoctrineBootstrap.php';
+
+       use xen\db\doctrine\DoctrineBootstrap;
+
+       $config     = require 'setup.php';
+       $databases  = require __DIR__ . '/../application/configs/databases.php';
+
+       $driver     = $databases[$config['db']]['driver'];
+       $username   = $databases[$config['db']]['username'];
+       $password   = $databases[$config['db']]['password'];
+       $dbname     = $databases[$config['db']]['dbname'];
+
+       $dbConfig = (object) ['driver' => $driver, 'username' => $username, 'password' => $password, 'dbname' => $dbname];
+
+       $entityManager = DoctrineBootstrap::bootstrap($dbConfig, $config['package']);
+
+       $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+           'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($entityManager)
+       ));
+
+       return $helperSet;
+       ---------------------------------------------------------
+
+    7. http://stackoverflow.com/questions/15099060/doctrine2-class-is-not-a-valid-entity-or-mapped-super-class
+    8. http://symfony.com/doc/current/book/doctrine.html
+    9. /users/ismael/Dropbox/Documentos/www/public_html/doctrine2-tutorial/cli-config.php
+    10. http://docs.doctrine-project.org/en/2.1/tutorials/getting-started-xml-edition.html
+    11. Create a Bootstrap.php file and require it from dic.php and cli-config.php
+
+    commands:
+
+        generating entities from database:
+
+            (*)php doctrine.php orm:generate:entities ../application/packages/ --generate-annotations=true
+
+            ----------
+            php doctrine.php orm:convert-mapping --force --from-database annotation ../application/packages/main/models/entities
+            php doctrine.php orm:generate:entities ../application/packages/main/models/entities --generate-annotations=true
+            ----------
+
+
+
+==============
+Using Doctrine console
+==============
+
+    [http://szdredd.blogspot.com.es/2014/01/how-to-generate-doctrine-entities-from.html]
+
+    1. php doctrine.php orm:convert-mapping --force --from-database annotation --namespace="main\\models\\entities\\" ../application/packages
+
+    To add getters and setters:
+
+    2. php doctrine.php orm:generate:entities ../application/packages/ --generate-annotations=true
+
+
+    Do not worry about proxies namespace, they are used internally by doctrine.
+
+        Doctrine proxies are internal classes and should not be handled directly.
+        So it really does not matter what they are called
+
+    Proxies auto generation
+
+        Correct behavior, proxy classes are auto generated on demand. In your case there is no demand for them.
+
+=========================
+Installing xenframework
+=========================
+
+https://packagist.org/packages/xenframework/xen
+
+1. create composer.json
+
+    {
+        "require": {
+            "xenframework/xen": "2.0.0.*@dev"
+        }
+    }
+
+2. run composer install
+
+    composer install
+
+=========================
+Installing skeleton app
+=========================
+
+info: https://github.com/zendframework/ZendSkeletonApplication#using-composer-recommended
+
+1. create composer.json
+
+   composer create-project -sdev xenframework/skeleton-app myproject
+
+2.
+
+
+======================
+Composer
+======================
+http://symfony.es/documentacion/guia-de-instalacion-de-composer/
+librosweb.es/tutorial/los-alias-de-composer
+
+======================
+phpunit
+======================
+http://confluence.jetbrains.com/display/PhpStorm/PHPUnit+Installation+via+Composer+in+PhpStorm
+http://www.allisterantosik.com/installing-phpunit-on-osx-mavericks/
+https://www.youtube.com/watch?v=wPVXgTl6f7w
+
+1. use composer to install phpunit in vendor
+2. phpstorm->preferences->phpunit->use custom loader->
+
+/Users/ismael/Dropbox/Documentos/www/public_html/myownphpmvcframework.com/vendor/phpunit/phpunit/phpunit
+
+3. Run/Debug edit configuration
+
+    use alternative configuration file (right button)
+
+    Default bootstrap file: /Users/ismael/Dropbox/Documentos/www/public_html/myownphpmvcframework.com/vendor/phpunit/phpunit/tests/bootstrap.php
+
+4. bootstrap file
+http://jes.st/2011/phpunit-bootstrap-and-autoloading-classes/
+
+Create a bootstrap.php file inside xenframework/xen/src/xen/tests
+
+---------------
+<?php
+
+require __DIR__ . '/../kernel/bootstrap/Autoloader.php';
+
+$autoloader = new \xen\kernel\bootstrap\Autoloader(array(__DIR__ . '/../..'));
+$autoloader->register();
+
+---------------
+
+5. make phpunit global
+
+sudo ln -s /Users/ismael/Dropbox/Documentos/www/public_html/myownphpmvcframework.com/vendor/phpunit/phpunit/phpunit /usr/bin/phpunit
+
+6. Running phpunit from command line
+
+phpunit --bootstrap /path_to_your/bootstrap.php --no-configuration /path_to_your/tests
+
+

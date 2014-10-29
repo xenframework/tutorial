@@ -1,0 +1,7 @@
+{
+    "require": {
+    	"doctrine/orm": "*",
+    	"phpunit/phpunit": "4.1.*",
+        "xenframework/xen": "2.0.0.*@dev"
+    }
+}

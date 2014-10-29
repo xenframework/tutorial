@@ -16,7 +16,7 @@
 
 return array(
     'db1' => array(
-        'driver'    => 'mysql',
+        'driver'    => 'pdo_mysql',
         'hostname'  => '127.0.0.1',
         'port'      => '',
         'dbname'    => 'mvc',
@@ -25,7 +25,7 @@ return array(
         'charset'   => 'utf8',
     ),
     'db2' => array(
-        'driver'    => 'mysql',
+        'driver'    => 'pdo_mysql',
         'hostname'  => '127.0.0.1',
         'port'      => '',
         'dbname'    => 'mvc',

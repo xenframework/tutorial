@@ -1,0 +1,5 @@
+Documentation
+http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
+
+Visual-Paradigm
+http://www.visual-paradigm.com/product/vpuml/tutorials/phpdoctrinemysql.jsp
