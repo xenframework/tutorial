@@ -46,6 +46,15 @@ array(
                 return 'application/layouts/yourFolder';
             }
 
+        - config.php (package)
+
+            return array(
+                'mvc'       => array(
+                    'layoutPath'    => 'application/packages/com/xenframework/calculator/layouts/default',
+                ),
+                'package'   => array(),
+            );
+
 3. Partials
 
         - They are Phtml objects and their files (.phtml) must be stored in application/views/partials
